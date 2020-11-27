@@ -10,11 +10,16 @@ class GeneratePage extends StatefulWidget {
   GeneratePage({Key key, @required this.value}) : super(key: key);
 }
 
+  Color appBarColor =
+      Color.fromARGB(500, 4, 183, 226);
+
 class GeneratePageState extends State<GeneratePage> {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: appBarColor,
         title: Text(
           'CREATE YOUR OWN MK QRCODE',
           style: TextStyle(

@@ -47,16 +47,23 @@ class _MyHomePageState extends State<MyHomePage> {
     // checkLoginStatus();
   }
 
-  Color gradientStart = Colors.blue[400]; //Change start gradient color here
-  Color gradientEnd = Colors.blue; //Change end gradient color here
+  Color gradientStart = Colors.blue; //Change start gradient color here
+  Color gradientEnd = Colors.blue[300];
+   //Change end gradient color here
 
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.blue,
         body: Container(
-          decoration: BoxDecoration(),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [gradientStart, gradientEnd],
+                begin: FractionalOffset(0.9, 0.0),
+                end: FractionalOffset(0.0, 0.7),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp),
+          ),
           child: Center(
             child: Column(
               children: [

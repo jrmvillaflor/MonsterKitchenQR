@@ -92,7 +92,7 @@ class SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: 15),
                       child: Column(
                         children: [
                           Image.asset(
@@ -100,6 +100,22 @@ class SignUpPageState extends State<SignUpPage> {
                             width: 250,
                           )
                         ],
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Contact Tracing App'.toUpperCase(),
+                              style: TextStyle(
+                                  fontFamily: 'Raleway',
+                                  fontSize: 15,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -218,13 +234,12 @@ class SignUpPageState extends State<SignUpPage> {
                       padding: EdgeInsets.only(top: 15),
                       child: ButtonTheme(
                         buttonColor: Color.fromARGB(500, 204, 51, 153),
-                        minWidth: 300.0,
+                        minWidth: 320.0,
                         height: 50.0,
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)),
                           onPressed: () async {
-
                             passData();
                             adduser();
                           },

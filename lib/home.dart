@@ -1,18 +1,22 @@
-//import 'package:monsterkitchen/login.dart';
 import 'package:flutter/material.dart';
-// import 'search.dart';
+import 'package:monsterkitchen/scan.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'database.dart';
-// import 'add_book.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
-//import 'login.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage();
-
   @override
   State<StatefulWidget> createState() {
     return HomePageState();
   }
+
+  final String value;
+
+  // receive data from the FirstScreen as a parameter
+  HomePage({Key key, @required this.value}) : super(key: key);
+}
+
+logout(BuildContext context) {
+  Navigator.pop(context);
 }
 
 class HomePageState extends State<HomePage> {
@@ -29,17 +33,36 @@ class HomePageState extends State<HomePage> {
     // checkLoginStatus();
   }
 
+  Color appBarColor =
+      Color.fromARGB(500, 4, 183, 226);
 
-  Color gradientStart = Colors.blueGrey; //Change start gradient color here
-  Color gradientEnd = Colors.blueGrey[900]; //Change end gradient color here
+  Color gradientStart = Colors.blue[400]; //Change start gradient color here
+  Color gradientEnd = Colors.blue[500]; //Change end gradient color here
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           resizeToAvoidBottomPadding: false,
-          backgroundColor: Colors.blue,
-          appBar: AppBar(backgroundColor: Colors.blueGrey[700]),
+          appBar: AppBar(
+            title: Text('Hello, ${widget.value}!'.toUpperCase(),
+            style: TextStyle(
+                fontFamily: 'Raleway',
+              )
+            ),
+            backgroundColor: appBarColor,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  logout(context);
+                },
+              )
+            ],
+          ),
           body: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -58,48 +81,30 @@ class HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ButtonTheme(
-                          buttonColor: Colors.brown,
-                          minWidth: 220.0,
+                          buttonColor: Colors.lightGreen,
+                          minWidth: 280.0,
                           height: 80.0,
                           child: RaisedButton(
                             shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(10.0)),
+                                borderRadius: new BorderRadius.circular(15.0)),
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => null),
+                                MaterialPageRoute(
+                                    builder: (context) => ScanPage()),
                               );
                             },
                             child: Column(
                               children: <Widget>[
-                                Text(
-                                  'ADD READING',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Raleway'),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(MaterialCommunityIcons.qrcode_scan,
+                                      color: Colors.white),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ButtonTheme(
-                          buttonColor: Colors.brown,
-                          minWidth: 220.0,
-                          height: 80.0,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(10.0)),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => null),
-                              );
-                            },
-                            child: Column(
-                              children: <Widget>[
                                 Text(
-                                  'OCR TEST',
+                                  'Scan QR'.toUpperCase(),
                                   style: TextStyle(
+                                      fontSize: 25,
                                       color: Colors.white,
                                       fontFamily: 'Raleway'),
                                 ),
@@ -108,12 +113,16 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                       ],
+                      
                     ),
+                  
                   ),
                 ],
               ),
             ),
-          )),
+          ),
+
+        ),
     );
   }
 }
