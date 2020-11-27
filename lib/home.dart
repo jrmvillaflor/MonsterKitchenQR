@@ -29,24 +29,6 @@ class HomePageState extends State<HomePage> {
     // checkLoginStatus();
   }
 
-  // checkLoginStatus() async {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   if(sharedPreferences.getString("token") == null) {
-  //     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (Route<dynamic> route) => false);
-  getFirstname() async {
-    allRows = await dbHelper.queryFirstName();
-
-    return allRows;
-  } //   }
-  // }
-
-  Text buildItem(int index) {
-    return Text(
-      allRows[index]['userFNAME'],
-      style:
-          TextStyle(color: Colors.white, fontFamily: 'Raleway', fontSize: 23),
-    );
-  }
 
   Color gradientStart = Colors.blueGrey; //Change start gradient color here
   Color gradientEnd = Colors.blueGrey[900]; //Change end gradient color here

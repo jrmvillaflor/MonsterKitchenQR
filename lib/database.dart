@@ -4,22 +4,15 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class DatabaseHelper {
   static final _databaseName = "users.db";
   static final _databaseVersion = 1;
 
-  static final table = 'abcd';
+  static final table = 'mk';
 
   static final columnId = 'userID';
   static final columnUsername = 'userUSERNAME';
-  static final columnFname = 'userFNAME';
-  static final columnLname= 'userLNAME';
-  static final columnEmail = 'userEMAIL';
-  static final columnContactNumber = 'userCONTACTNUMBER';
-    static final columnPassword = 'userPASSWORD';
-  
- 
+  static final columnPassword = 'userPASSWORD';
 
   // Create a single instance of the database
   DatabaseHelper._privateConstructor();
@@ -49,22 +42,13 @@ class DatabaseHelper {
     await db.execute('''
           CREATE TABLE $table (
             $columnId INTEGER PRIMARY KEY,
-            $columnUsername TEXT NOT NULL,
-            $columnFname TEXT NOT NULL,
-            $columnLname TEXT NOT NULL,
-            
-            
-            $columnEmail TEXT NOT NULL,
-            $columnContactNumber TEXT NOT NULL,
-            $columnPassword TEXT NOT NULL
-
-  
+            $columnUsername TEXT NULL,
+            $columnPassword TEXT NULL,
           )
           ''');
-
   }
-  
-    Future<int> insert(Map<String, dynamic> row) async {
+
+  Future<int> insert(Map<String, dynamic> row) async {
     Database db = await instance.database;
     return await db.insert(table, row);
   }
@@ -74,18 +58,12 @@ class DatabaseHelper {
     return await db.query(table);
   }
 
-  Future<List<Map<String, dynamic>>> queryFirstName() async {
-    Database db = await instance.database;
-    return await db.rawQuery('SELECT userFNAME FROM $table');
-  }
 
   Future<int> queryRowCount() async {
     Database db = await instance.database;
     return Sqflite.firstIntValue(
         await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }
-
-  
 
   Future<int> update(Map<String, dynamic> row) async {
     Database db = await instance.database;
@@ -96,14 +74,14 @@ class DatabaseHelper {
   Future<int> delete(int id) async {
     Database db = await instance.database;
     return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
-  } 
+  }
 
   Future<int> deleteall() async {
     Database db = await instance.database;
     return await db.delete(table);
-  } 
+  }
 
-   Future<int> signup(Map<String, dynamic> row) async {
+  Future<int> signup(Map<String, dynamic> row) async {
     Database db = await instance.database;
     return await db.insert(table, row);
   }
@@ -128,9 +106,5 @@ class DatabaseHelper {
     
   }
   */
-  
-
-  
 
 }
-
