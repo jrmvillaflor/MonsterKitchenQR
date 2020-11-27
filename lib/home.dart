@@ -60,7 +60,7 @@ class HomePageState extends State<HomePage> {
                 onPressed: () {
                   logout(context);
                 },
-              )
+              ),
             ],
           ),
           body: Container(
