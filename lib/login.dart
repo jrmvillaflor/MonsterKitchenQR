@@ -55,7 +55,7 @@ class LoginPageState extends State<LoginPage> {
     userList = userMap.values.toList();
   }
 
-  check(List alluser, String username, String password) {
+  check(List alluser, String username, String password, String branch) {
     getAccessToken(url);
     int index = 0;
     while (alluser.length - 1 > index) {
@@ -73,10 +73,10 @@ class LoginPageState extends State<LoginPage> {
 
   validate() async {
     getAccessToken(url);
-    var successUser = check(userList, 'userUSERNAME', 'userPASSWORD');
+    var successUser = check(userList, 'userUSERNAME', 'userPASSWORD', 'branch');
     if (successUser != false) {
       print(userList[successUser]['userUSERNAME']);
-
+      print(userList[successUser]['branch']);
       // Map<String, dynamic> row = {
       //   DatabaseHelper.columnUsername: userList[successUser]['userUSERNAME'],
       //   DatabaseHelper.columnPassword: userList[successUser]['userPASSWORD'],
@@ -87,7 +87,7 @@ class LoginPageState extends State<LoginPage> {
       showToastLoginSuccess();
       var route = new MaterialPageRoute(
         builder: (BuildContext context) =>
-            new HomePage(value: userUSERNAME.text),
+            new HomePage(value: userList[successUser]['userUSERNAME']),
       );
       Navigator.of(context).push(route);
     } else {

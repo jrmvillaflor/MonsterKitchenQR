@@ -11,7 +11,7 @@ import 'database.dart';
 void main() => runApp(MyApp());
 
 
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext context){
     return super.createHttpClient(context)
@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
+  
 signupColor() {
   Color.fromARGB(500, 204, 51, 153);
 }

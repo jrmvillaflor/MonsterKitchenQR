@@ -6,16 +6,26 @@ import 'package:intl/intl.dart';
 class ScanPage extends StatefulWidget {
   @override
   _ScanPageState createState() => _ScanPageState();
+
+
+   //final String value;
+
+  //ScanPage({Key key, @required this.value}) : super(key: key);
 }
 
+
+
 class _ScanPageState extends State<ScanPage> {
+
+  
+  
   String qrCodeResult;
   bool backCamera = true;
 
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+    String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM \n').format(now);
 
     Color appBarColor =
       Color.fromARGB(500, 4, 183, 226);
@@ -54,11 +64,12 @@ class _ScanPageState extends State<ScanPage> {
           child: Text(
             (qrCodeResult == null) || (qrCodeResult == "")
                 ? "Please Scan to show some result".toUpperCase()
-                : "Result: $formattedDate" + qrCodeResult.toUpperCase(),
+                : "Result: $formattedDate \n" + qrCodeResult.toUpperCase(),
             style: TextStyle(
-                fontSize: 12.0,
+                fontSize: 15.0,
                 fontWeight: FontWeight.w900,
-                fontFamily: 'Raleway'),
+                fontFamily: 'Raleway',
+                wordSpacing: 10),
           ),
         ));
   }
