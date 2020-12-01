@@ -30,7 +30,7 @@ dependencies:
   qr_flutter: any
   flutter_vector_icons: any
   barcode_scan: 
-  image_picker_saver:
+  image_picker_saver: 
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +41,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons:
+
+flutter_icons:
+  image_path: "assets/images/monsterkitchenicon.png" 
+  android: true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

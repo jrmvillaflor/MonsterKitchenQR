@@ -17,8 +17,6 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> {
 
-  
-  
   String qrCodeResult;
   bool backCamera = true;
 
@@ -64,14 +62,15 @@ class _ScanPageState extends State<ScanPage> {
           child: Text(
             (qrCodeResult == null) || (qrCodeResult == "")
                 ? "Please Scan to show some result".toUpperCase()
-                : "Result: $formattedDate \n" + qrCodeResult.toUpperCase(),
+                : "Time In: $formattedDate \n" + qrCodeResult.toUpperCase(),
             style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w900,
                 fontFamily: 'Raleway',
-                wordSpacing: 10),
+                wordSpacing: 5),
           ),
-        ));
+        ),
+    );
   }
 
 
