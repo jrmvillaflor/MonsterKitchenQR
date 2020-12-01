@@ -1,11 +1,29 @@
 //import 'package:bookinder/genretest.dart';
 //import 'package:monsterkitchen/home.dart';
+//import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'signup.dart';
 import 'database.dart';
 
 void main() => runApp(MyApp());
+
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
+Future getAccessToken(String url) async {
+  HttpOverrides.global = new MyHttpOverrides();
+}
+
+final String url = "https://192.168.10.215/mk/userController";
 
 class MyApp extends StatelessWidget {
   //SharedPreferences sharedPreferences;
@@ -44,12 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // checkLoginStatus();
   }
 
   Color gradientStart = Colors.blue; //Change start gradient color here
   Color gradientEnd = Colors.blue[300];
-   //Change end gradient color here
+  //Change end gradient color here
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -110,7 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                       borderRadius:
                                           new BorderRadius.circular(30.0)),
                                   color: Color.fromARGB(500, 4, 183, 226),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    final url =
+                                        "https://192.168.10.215/mk/adminController";
+                                    getAccessToken(url);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -130,7 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       borderRadius:
                                           new BorderRadius.circular(30.0)),
                                   color: Color.fromARGB(500, 204, 51, 153),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    getAccessToken(url);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

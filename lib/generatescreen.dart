@@ -1,11 +1,18 @@
+//import 'dart:convert';
+
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:async';
+//import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:image_picker_saver/image_picker_saver.dart';
+//import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+//import 'dart:io';
 
 class GeneratePage extends StatefulWidget {
   @override
@@ -16,10 +23,14 @@ class GeneratePage extends StatefulWidget {
   GeneratePage({Key key, @required this.value}) : super(key: key);
 }
 
+
+
+
 Color appBarColor = Color.fromARGB(500, 4, 183, 226);
 
 class GeneratePageState extends State<GeneratePage> {
-  static GlobalKey screen = new GlobalKey();
+  
+  static GlobalKey previewContainer = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +59,7 @@ class GeneratePageState extends State<GeneratePage> {
         ),
       ),
       body: RepaintBoundary(
-        key: screen,
+        key: previewContainer,
         child: ListView(
           children: <Widget>[
             Padding(
@@ -106,13 +117,14 @@ class GeneratePageState extends State<GeneratePage> {
   }
 
   screenShot() async {  
-    RenderRepaintBoundary boundary = screen.currentContext.findRenderObject();
+    RenderRepaintBoundary boundary = previewContainer.currentContext.findRenderObject();
     ui.Image image = await boundary.toImage();
+    final directory = (await getApplicationDocumentsDirectory()).path;
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-
-    var filePath = await ImagePickerSaver.saveFile(
-        fileData: byteData.buffer.asUint8List());
-    print(filePath);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    print(pngBytes);
+    File imgFile =new File('$directory/screenshot.png');
+    imgFile.writeAsBytes(pngBytes);
   }
 }
 

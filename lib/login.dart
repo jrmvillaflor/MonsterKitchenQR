@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as https;
 import 'dart:convert';
 import 'home.dart';
+import 'dart:io';
 
 class LoginPage extends StatefulWidget {
   LoginPage();
@@ -16,12 +17,19 @@ class LoginPage extends StatefulWidget {
   }
 }
 
+Future getAccessToken(String url) async {
+  HttpClient client = new HttpClient();
+  client.badCertificateCallback =
+      ((X509Certificate cert, String host, int port) => true);
+}
+
 class LoginPageState extends State<LoginPage> {
   //final username = TextEditingController();
   //final password = TextEditingController();
   //final dbHelper = DatabaseHelper.instance;
   // List allRows;
-  final String url = "http://192.168.10.215/mk/adminController";
+
+  final String url = "https://192.168.10.215/mk/adminController";
 //Map data;
   List userList;
   Map userMap;
@@ -35,9 +43,12 @@ class LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     getAllDatas();
+    getAccessToken(url);
   }
 
   getAllDatas() async {
+    getAccessToken(url);
+
     final response = await https.get(url);
 
     userMap = json.decode(response.body);
@@ -45,6 +56,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   check(List alluser, String username, String password) {
+    getAccessToken(url);
     int index = 0;
     while (alluser.length - 1 > index) {
       if (userUSERNAME.text == alluser[index][username]) {
@@ -60,6 +72,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   validate() async {
+    getAccessToken(url);
     var successUser = check(userList, 'userUSERNAME', 'userPASSWORD');
     if (successUser != false) {
       print(userList[successUser]['userUSERNAME']);
@@ -155,11 +168,11 @@ class LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Center(
-                          child: Image.asset(
-                        'assets/images/monsterkitchenlabel.png',
-                        height: 100,
+                        child: Image.asset(
+                          'assets/images/monsterkitchenlabel.png',
+                          height: 100,
+                        ),
                       ),
-                     ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
@@ -251,7 +264,8 @@ class LoginPageState extends State<LoginPage> {
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)),
-                          onPressed: () {
+                          onPressed: () async {
+                            getAccessToken(url);
                             validate();
                           },
                           child: Text(

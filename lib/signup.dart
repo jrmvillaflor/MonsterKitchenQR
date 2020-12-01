@@ -1,5 +1,7 @@
 //import 'dart:html';
 
+//import 'dart:convert';
+
 import 'package:flutter/material.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 //import 'login.dart';
@@ -7,6 +9,15 @@ import 'package:http/http.dart' as https;
 import 'dart:async';
 import 'generatescreen.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:io';
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 
 class SignUpPage extends StatefulWidget {
   SignUpPage();
@@ -17,6 +28,12 @@ class SignUpPage extends StatefulWidget {
   }
 }
 
+Future getAccessToken(String url) async {
+ HttpOverrides.global = new MyHttpOverrides();
+}
+
+final String url = "https://192.168.10.215/mk/userController";
+
 class SignUpPageState extends State<SignUpPage> {
   final userFNAME = TextEditingController();
   final userADDRESS = TextEditingController();
@@ -25,13 +42,15 @@ class SignUpPageState extends State<SignUpPage> {
   String dummyData;
   TextEditingController qrTextController = TextEditingController();
 
-  final String url = "http://192.168.10.215/mk/userController";
+  final String url = "https://192.168.10.215/mk/userController";
 
   bool isUpdating = false;
   Map data;
   int id;
 
+  
   passData() {
+    getAccessToken(url);
     var route = new MaterialPageRoute(
       builder: (BuildContext context) =>
           new GeneratePage(value: userFNAME.text),
@@ -40,6 +59,7 @@ class SignUpPageState extends State<SignUpPage> {
   }
 
   Future<dynamic> adduser() async {
+
     String userfname = userFNAME.text;
     String usercontact = userCONTACTNUMBER.text;
     String useraddr = userADDRESS.text;
@@ -52,6 +72,7 @@ class SignUpPageState extends State<SignUpPage> {
       "userADDRESS": "$useraddr",
       "userCONTACTNUMBER": "$usercontact",
     };
+    getAccessToken(url);
     final response = await https.post(url, headers: headers, body: adduser);
     int statusCode = response.statusCode;
 
@@ -240,6 +261,7 @@ class SignUpPageState extends State<SignUpPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)),
                           onPressed: () async {
+                            getAccessToken(url);
                             passData();
                             adduser();
                           },
