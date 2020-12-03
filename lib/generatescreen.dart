@@ -1,34 +1,25 @@
-//import 'dart:convert';
-
-
-import 'dart:io';
-
+// import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-//import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-//import 'package:image_picker_saver/image_picker_saver.dart';
+// import 'dart:typed_data';
+// import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-//import 'dart:io';
+// import 'package:flutter/services.dart';
+
 
 class GeneratePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => GeneratePageState();
   final String value;
-
-  // receive data from the FirstScreen as a parameter
   GeneratePage({Key key, @required this.value}) : super(key: key);
 }
 
-
-
 String dummyData;
 TextEditingController qrTextController = TextEditingController();
-
 Color appBarColor = Color.fromARGB(500, 4, 183, 226);
+
+
 
 class GeneratePageState extends State<GeneratePage> {
   
@@ -37,20 +28,11 @@ class GeneratePageState extends State<GeneratePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-              
-              
+        actions: <Widget>[  
             ],
         backgroundColor: appBarColor,
         title: Padding(
           padding: const EdgeInsets.only(left: 130),
-          child: Text(
-            'SAVE QR IMAGE',
-            style: TextStyle(
-              fontFamily: 'Raleway',
-              fontSize: 15,
-            ),
-          ),
         ),
       ),
       body: RepaintBoundary(
@@ -74,7 +56,7 @@ class GeneratePageState extends State<GeneratePage> {
                     onPressed: () {
                       setState(() {
                         dummyData =
-                            '${widget.value}' == "" ? null : '${widget.value}';
+                        '${widget.value}' == "" ? null : '${widget.value}';
                       });
                     },
                   ),
@@ -98,7 +80,8 @@ class GeneratePageState extends State<GeneratePage> {
                         fontSize: 20,
                       ),
                     ),
-                  ))
+                  ),
+                )
                 : QrImage(
                     embeddedImage:
                         AssetImage('assets/images/monsterkitchenlogo.png'),
@@ -111,15 +94,6 @@ class GeneratePageState extends State<GeneratePage> {
     );
   }
 
-  screenShot() async {  
-    RenderRepaintBoundary boundary = previewContainer.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
-    final directory = (await getApplicationDocumentsDirectory()).path;
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    print(pngBytes);
-    File imgFile =new File('$directory/screenshot.png');
-    imgFile.writeAsBytes(pngBytes);
-  }
+  
 }
 

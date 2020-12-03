@@ -1,7 +1,5 @@
-//import 'dart:convert';
-// import 'dart:convert';
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -33,8 +31,29 @@ Future getAccessToken(String url) async {
 
 class ScanPageState extends State<ScanPage> {
   final String url = "https://192.168.10.215/mk/userLoginController";
+  final String url2 = "https://192.168.10.215/mk/adminController";
 
   var dropdownValue;
+  List userList;
+  Map userMap;
+
+  getAllDatas() async {
+    getAccessToken(url);
+
+    final response = await https.get(url2);
+
+    userMap = json.decode(response.body);
+    userList = userMap.values.toList();
+
+    print(userList[1]['branch']);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllDatas();
+    getAccessToken(url);
+  }
 
   Future<dynamic> adduser() async {
     getAccessToken(url);
@@ -126,7 +145,7 @@ class ScanPageState extends State<ScanPage> {
                   child: Text(
                     (qrCodeResult == null) || (qrCodeResult == "")
                         ? "Please Scan to show some result".toUpperCase()
-                        : "Time In: $formattedDate \n name: ".toUpperCase() + 
+                        : "Time In: $formattedDate \n name: ".toUpperCase() +
                             qrCodeResult.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -144,20 +163,30 @@ class ScanPageState extends State<ScanPage> {
                         children: <Widget>[
                           DropdownButtonFormField<String>(
                             decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                fontFamily: 'Raleway'
+                              ),
                               hintText: 'Select Branch'.toUpperCase(),
                             ),
                             icon: Icon(Icons.arrow_drop_down_circle),
                             value: dropdownValue,
-                            style: TextStyle(color: Colors.black87, fontFamily: 'Raleway'),
+                            style: TextStyle(
+                                color: Colors.black87, fontFamily: 'Raleway'),
                             items: <String>[
                               'Monster Kitchen Cogon'.toUpperCase(),
-                              'Monster Kitchen Rizal St..'.toUpperCase(),
+                              'Monster Kitchen Rizal St.'.toUpperCase(),
                               'Monster Kitchen Osmena'.toUpperCase(),
+                              'YSU Igpit'.toUpperCase(),
+                              'YSU Store'.toUpperCase(),
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
-                              );
+                                child: Text(value,
+                                style: TextStyle(
+                                  fontFamily: 'Raleway'
+                                ),
+                              ),
+                            );
                             }).toList(),
                             onChanged: (String newValue) {
                               setState(() {

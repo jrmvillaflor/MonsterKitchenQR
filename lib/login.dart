@@ -22,14 +22,11 @@ Future getAccessToken(String url) async {
 }
 
 class LoginPageState extends State<LoginPage> {
-
-
   final String url = "https://192.168.10.215/mk/adminController";
 
   List userList;
   Map userMap;
   final dbHelper = DatabaseHelper.instance;
-
 
   final userUSERNAME = TextEditingController();
   final userPASSWORD = TextEditingController();
@@ -48,6 +45,7 @@ class LoginPageState extends State<LoginPage> {
 
     userMap = json.decode(response.body);
     userList = userMap.values.toList();
+
   }
 
   check(List alluser, String username, String password, String branch) {
@@ -72,8 +70,9 @@ class LoginPageState extends State<LoginPage> {
     if (successUser != false) {
       print(userList[successUser]['userUSERNAME']);
       print(userList[successUser]['branch']);
-    
+
       showToastLoginSuccess();
+
       var route = new MaterialPageRoute(
         builder: (BuildContext context) =>
             new HomePage(value: userList[successUser]['userUSERNAME']),
@@ -102,7 +101,6 @@ class LoginPageState extends State<LoginPage> {
         toastLength: Toast.LENGTH_LONG);
   }
 
-
   Color gradientStart = Colors.blue;
   Color gradientEnd = Colors.blue[300];
 
@@ -121,8 +119,7 @@ class LoginPageState extends State<LoginPage> {
                   begin: FractionalOffset(0.9, 0.0),
                   end: FractionalOffset(0.0, 0.7),
                   stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp
-              ),
+                  tileMode: TileMode.clamp),
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 30, 30, 15),
@@ -248,7 +245,6 @@ class LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 }

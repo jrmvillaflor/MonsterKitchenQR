@@ -3,6 +3,7 @@
 //import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 //import 'login.dart';
 import 'package:http/http.dart' as https;
@@ -11,11 +12,12 @@ import 'generatescreen.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
 
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext context){
+  HttpClient createHttpClient(SecurityContext context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -29,7 +31,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 Future getAccessToken(String url) async {
- HttpOverrides.global = new MyHttpOverrides();
+  HttpOverrides.global = new MyHttpOverrides();
 }
 
 final String url = "https://192.168.10.215/mk/userController";
@@ -48,7 +50,6 @@ class SignUpPageState extends State<SignUpPage> {
   Map data;
   int id;
 
-  
   passData() {
     getAccessToken(url);
     var route = new MaterialPageRoute(
@@ -59,7 +60,6 @@ class SignUpPageState extends State<SignUpPage> {
   }
 
   Future<dynamic> adduser() async {
-
     String userfname = userFNAME.text;
     String usercontact = userCONTACTNUMBER.text;
     String useraddr = userADDRESS.text;
@@ -79,6 +79,24 @@ class SignUpPageState extends State<SignUpPage> {
     print(statusCode);
 
     print(response);
+  }
+
+  void showToastAddSuccess() {
+    Fluttertoast.showToast(
+        msg: 'Registration Sucessful',
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_LONG);
+  }
+
+  void showToastAddFailed() {
+    Fluttertoast.showToast(
+        msg: 'Registration Failed',
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_LONG);
   }
 
   Color gradientStart = Colors.blue;
@@ -106,7 +124,6 @@ class SignUpPageState extends State<SignUpPage> {
             ),
             child: Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.always,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
                 child: Column(
@@ -142,6 +159,7 @@ class SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
                             value.isEmpty ? 'Please enter valid Name' : null,
                         style: TextStyle(color: Colors.white),
@@ -178,6 +196,7 @@ class SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
                             value.isEmpty ? 'Please enter valid Address' : null,
                         style: TextStyle(color: Colors.white),
@@ -214,6 +233,7 @@ class SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 10),
                       child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value.length != 11)
                             return 'Mobile Number must be of 11 digit';
@@ -261,9 +281,14 @@ class SignUpPageState extends State<SignUpPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0)),
                           onPressed: () async {
-                            getAccessToken(url);
-                            passData();
-                            adduser();
+                            if(formKey.currentState.validate()) {
+                              getAccessToken(url);
+                              passData();
+                              adduser();
+                              showToastAddSuccess();
+                            } else {
+                              showToastAddFailed();
+                            }
                           },
                           child: Text(
                             'Signup to Generate QR',
@@ -300,6 +325,7 @@ class SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
-        ));
+        ),
+    );
   }
 }
