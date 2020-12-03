@@ -105,7 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                             fontFamily: 'Raleway',
                             fontSize: 15,
-                            color: Colors.white),
+                            color: Colors.white
+                        ),
                       )
                     ],
                   ),
@@ -116,34 +117,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: <Widget>[
                       Container(
                         child: ButtonTheme(
-                          minWidth: 160.0,
+                          minWidth: 250.0,
                           height: 55.0,
-                          child: Row(
+                          child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: const EdgeInsets.all(15.0),
                                 child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0)),
-                                  color: Color.fromARGB(500, 4, 183, 226),
-                                  onPressed: () async {
-                                    final url =
-                                        "https://192.168.10.215/mk/adminController";
-                                    getAccessToken(url);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginPage()),
-                                    );
-                                  },
-                                  child: Text("LOGIN",
-                                      style: TextStyle(
-                                        fontSize: 25.0,
-                                        fontFamily: 'Raleway',
-                                      )),
-                                  textColor: Colors.white,
-                                ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(30.0)),
+                                    color: Color.fromARGB(500, 4, 183, 226),
+                                    onPressed: () async {
+                                      final url =
+                                          "https://192.168.10.215/mk/adminController";
+                                      getAccessToken(url);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginPage()),
+                                      );
+                                    },
+                                    child: Text("LOGIN",
+                                        style: TextStyle(
+                                          fontSize: 25.0,
+                                          fontFamily: 'Raleway',
+                                        )),
+                                    textColor: Colors.white,
+                                  ),
                               ),
                               FlatButton(
                                   shape: RoundedRectangleBorder(

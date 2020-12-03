@@ -34,7 +34,7 @@ class LoginPageState extends State<LoginPage> {
   List userList;
   Map userMap;
   final dbHelper = DatabaseHelper.instance;
-//bool _isLoading = false;
+
 
   final userUSERNAME = TextEditingController();
   final userPASSWORD = TextEditingController();
@@ -77,13 +77,7 @@ class LoginPageState extends State<LoginPage> {
     if (successUser != false) {
       print(userList[successUser]['userUSERNAME']);
       print(userList[successUser]['branch']);
-      // Map<String, dynamic> row = {
-      //   DatabaseHelper.columnUsername: userList[successUser]['userUSERNAME'],
-      //   DatabaseHelper.columnPassword: userList[successUser]['userPASSWORD'],
-      // };
-      // final value = await dbHelper.insert(row);
-      // print('inserted row id: $value');
-
+    
       showToastLoginSuccess();
       var route = new MaterialPageRoute(
         builder: (BuildContext context) =>
