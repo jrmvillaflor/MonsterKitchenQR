@@ -25,6 +25,8 @@ class GeneratePage extends StatefulWidget {
 
 
 
+String dummyData;
+TextEditingController qrTextController = TextEditingController();
 
 Color appBarColor = Color.fromARGB(500, 4, 183, 226);
 
@@ -36,15 +38,8 @@ class GeneratePageState extends State<GeneratePage> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-              IconButton(
-                icon: Icon( 
-                  Icons.save_alt,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  screenShot();
-                },
-              ),
+              
+              
             ],
         backgroundColor: appBarColor,
         title: Padding(
@@ -95,7 +90,7 @@ class GeneratePageState extends State<GeneratePage> {
                     child: Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Text(
-                      'Make sure to Screenshot QR upon generating the code :)'
+                      'Make sure to Screenshot QR upon generating the code'
                           .toUpperCase(),
                       style: TextStyle(
                         color: Colors.black87,
@@ -128,5 +123,3 @@ class GeneratePageState extends State<GeneratePage> {
   }
 }
 
-String dummyData;
-TextEditingController qrTextController = TextEditingController();

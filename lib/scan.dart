@@ -11,11 +11,7 @@ import 'package:http/http.dart' as https;
 
 class ScanPage extends StatefulWidget {
   @override
-  _ScanPageState createState() => _ScanPageState();
-
-  final String value;
-
-  ScanPage({Key key, @required this.value}) : super(key: key);
+  ScanPageState createState() => ScanPageState();
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -27,7 +23,7 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-logout(BuildContext context) {
+back(BuildContext context) {
   Navigator.pop(context);
 }
 
@@ -35,8 +31,10 @@ Future getAccessToken(String url) async {
   HttpOverrides.global = new MyHttpOverrides();
 }
 
-class _ScanPageState extends State<ScanPage> {
+class ScanPageState extends State<ScanPage> {
   final String url = "https://192.168.10.215/mk/userLoginController";
+
+  var dropdownValue;
 
   Future<dynamic> adduser() async {
     getAccessToken(url);
@@ -45,7 +43,7 @@ class _ScanPageState extends State<ScanPage> {
 
     String userfname = qrCodeResult;
     String timein = formattedDate;
-    String branch = '${widget.value}.'.toString();
+    String branch = dropdownValue;
 
     Map<String, String> headers = {
       "Content-type": "application/x-www-form-urlencoded"
@@ -73,7 +71,7 @@ class _ScanPageState extends State<ScanPage> {
         textColor: Colors.black,
         gravity: ToastGravity.CENTER,
         toastLength: Toast.LENGTH_LONG);
-    logout(context);
+    back(context);
   }
 
   bool isUpdating = false;
@@ -128,11 +126,11 @@ class _ScanPageState extends State<ScanPage> {
                   child: Text(
                     (qrCodeResult == null) || (qrCodeResult == "")
                         ? "Please Scan to show some result".toUpperCase()
-                        : "Time In: $formattedDate \n" +
+                        : "Time In: $formattedDate \n name: ".toUpperCase() + 
                             qrCodeResult.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.w900,
                       fontFamily: 'Raleway',
                       wordSpacing: 5,
@@ -141,17 +139,34 @@ class _ScanPageState extends State<ScanPage> {
                 ),
                 Container(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
-                    child: Text(
-                      'Branch: ${widget.value}'.toUpperCase(),
-                      style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Raleway',
-                      wordSpacing: 5,
-                    ),
-                    ),
-                    ),
+                      padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
+                      child: Column(
+                        children: <Widget>[
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              hintText: 'Select Branch'.toUpperCase(),
+                            ),
+                            icon: Icon(Icons.arrow_drop_down_circle),
+                            value: dropdownValue,
+                            style: TextStyle(color: Colors.black87, fontFamily: 'Raleway'),
+                            items: <String>[
+                              'Monster Kitchen Cogon'.toUpperCase(),
+                              'Monster Kitchen Rizal St..'.toUpperCase(),
+                              'Monster Kitchen Osmena'.toUpperCase(),
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
+                            },
+                          ),
+                        ],
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),

@@ -1,5 +1,3 @@
-//import 'package:bookinder/database.dart';
-//import 'package:bookinder/mylist.dart';
 import 'package:flutter/material.dart';
 import 'database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,13 +22,10 @@ Future getAccessToken(String url) async {
 }
 
 class LoginPageState extends State<LoginPage> {
-  //final username = TextEditingController();
-  //final password = TextEditingController();
-  //final dbHelper = DatabaseHelper.instance;
-  // List allRows;
+
 
   final String url = "https://192.168.10.215/mk/adminController";
-//Map data;
+
   List userList;
   Map userMap;
   final dbHelper = DatabaseHelper.instance;
@@ -107,31 +102,6 @@ class LoginPageState extends State<LoginPage> {
         toastLength: Toast.LENGTH_LONG);
   }
 
-  // signIn(String userUSERNAME, userPASSWORD) async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   Map data = {
-  //     'userUSERNAME': userUSERNAME,
-  //     'userPASSWORD': userPASSWORD
-  //   };
-  //   var jsonResponse = null;
-  //   var response = await https.post(url, body: data);
-  //   if(response.statusCode == 200) {
-  //     jsonResponse = json.decode(response.body);
-  //     if(jsonResponse != null) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //       sharedPreferences.setString("token", jsonResponse['token']);
-  //       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => HomePage()), (Route<dynamic> route) => false);
-  //     }
-  //   }
-  //   else {
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //     print(response.body);
-  //   }
-  // }
 
   Color gradientStart = Colors.blue;
   Color gradientEnd = Colors.blue[300];
@@ -151,7 +121,8 @@ class LoginPageState extends State<LoginPage> {
                   begin: FractionalOffset(0.9, 0.0),
                   end: FractionalOffset(0.0, 0.7),
                   stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
+                  tileMode: TileMode.clamp
+              ),
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 30, 30, 15),
@@ -277,6 +248,7 @@ class LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-        ));
+        )
+    );
   }
 }

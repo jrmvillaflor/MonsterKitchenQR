@@ -1,21 +1,19 @@
+//import 'package:flutter/material.dart';
 
+class UserAdmin{
+  String adminID;
+  String userUSERNAME;
+  String userPASSWORD;
+  String branch;
 
-class User {
-  final String adminID;
-  final String userUSERNAME, branch;
+  UserAdmin({this.adminID, this.userUSERNAME, this.userPASSWORD,
+                this.branch});
 
-  User({
-    this.adminID,
-    this.userUSERNAME,
-    this.branch
-  
-  });
-
-  factory User.fromJson(Map<String, dynamic> jsonData) {
-    return User(
-      adminID: jsonData['adminID'],
-      userUSERNAME: jsonData['userUSERNAME'],
-      
-    );
+  UserAdmin.fromJson(Map<String,dynamic> json){
+      adminID = json['adminID'];
+      userUSERNAME = json['userUSERNAME'];
+      userPASSWORD = json['userPASSWORD'];
+      branch = json['branch'];
   }
+    
 }
