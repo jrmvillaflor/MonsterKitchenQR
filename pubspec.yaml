@@ -44,7 +44,7 @@ dev_dependencies:
   flutter_launcher_icons:
 
 flutter_icons:
-  image_path: "assets/images/monsterkitchenicon.png" 
+  image_path: "assets/images/mkapp.png" 
   android: true
   ios: true
 # For information on the generic Dart part of this file, see the

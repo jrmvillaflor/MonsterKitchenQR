@@ -44,8 +44,6 @@ class ScanPageState extends State<ScanPage> {
 
     userMap = json.decode(response.body);
     userList = userMap.values.toList();
-
-    print(userList[1]['branch']);
   }
 
   @override

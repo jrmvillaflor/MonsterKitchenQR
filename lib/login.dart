@@ -36,6 +36,7 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
     getAllDatas();
     getAccessToken(url);
+    
   }
 
   getAllDatas() async {
@@ -73,11 +74,13 @@ class LoginPageState extends State<LoginPage> {
 
       showToastLoginSuccess();
 
-      var route = new MaterialPageRoute(
-        builder: (BuildContext context) =>
-            new HomePage(value: userList[successUser]['userUSERNAME']),
-      );
-      Navigator.of(context).push(route);
+      Navigator.of(context)
+        .push(MaterialPageRoute(
+          builder: (BuildContext context) => HomePage(
+            value: userList[successUser]['userUSERNAME'],
+          ),
+        ))
+        .then((_) => formKey.currentState.reset());
     } else {
       showToastLoginFailed();
     }
@@ -103,6 +106,7 @@ class LoginPageState extends State<LoginPage> {
 
   Color gradientStart = Colors.blue;
   Color gradientEnd = Colors.blue[300];
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -112,135 +116,138 @@ class LoginPageState extends State<LoginPage> {
         ),
         home: Scaffold(
           resizeToAvoidBottomPadding: false,
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [gradientStart, gradientEnd],
-                  begin: FractionalOffset(0.9, 0.0),
-                  end: FractionalOffset(0.0, 0.7),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(30, 30, 30, 15),
-              child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/monsterkitchenlabel.png',
-                          height: 100,
+          body: Form(
+            key: formKey,
+              child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [gradientStart, gradientEnd],
+                    begin: FractionalOffset(0.9, 0.0),
+                    end: FractionalOffset(0.0, 0.7),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(30, 30, 30, 15),
+                child: Form(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/monsterkitchenlabel.png',
+                            height: 100,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Contact Tracing App'.toUpperCase(),
-                              style: TextStyle(
-                                  color: Colors.white, fontFamily: 'Raleway'),
-                            )
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Contact Tracing App'.toUpperCase(),
+                                style: TextStyle(
+                                    color: Colors.white, fontFamily: 'Raleway'),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(),
-                      child: TextFormField(
-                        style: TextStyle(
-                            color: Colors.white, fontFamily: 'Raleway'),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(15),
-                          filled: true,
-                          fillColor: Colors.black12,
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                      Padding(
+                        padding: const EdgeInsets.only(),
+                        child: TextFormField(
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Raleway'),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(15),
+                            filled: true,
+                            fillColor: Colors.black12,
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
                               borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.transparent),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.transparent),
-                          ),
-                          labelText: "Username",
-                          labelStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: 'Raleway'),
-                        ),
-                        controller: userUSERNAME,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-                      child: TextFormField(
-                        style: TextStyle(
-                            color: Colors.white, fontFamily: 'Raleway'),
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(15),
-                          filled: true,
-                          fillColor: Colors.black12,
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                                  BorderSide(width: 1, color: Colors.transparent),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
                               borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.transparent),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.transparent),
-                          ),
-                          labelText: "Password",
-                          labelStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: 'Raleway'),
-                        ),
-                        controller: userPASSWORD,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-                      child: ButtonTheme(
-                        buttonColor: Color.fromARGB(500, 4, 183, 226),
-                        minWidth: 310.0,
-                        height: 50.0,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
-                          onPressed: () async {
-                            getAccessToken(url);
-                            validate();
-                          },
-                          child: Text(
-                            'LOGIN',
-                            style: TextStyle(
+                                  BorderSide(width: 1, color: Colors.transparent),
+                            ),
+                            labelText: "Username",
+                            labelStyle: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 13,
                                 fontFamily: 'Raleway'),
                           ),
+                          controller: userUSERNAME,
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                        child: TextFormField(
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: 'Raleway'),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(15),
+                            filled: true,
+                            fillColor: Colors.black12,
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.transparent),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.transparent),
+                            ),
+                            labelText: "Password",
+                            labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontFamily: 'Raleway'),
+                          ),
+                          controller: userPASSWORD,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+                        child: ButtonTheme(
+                          buttonColor: Color.fromARGB(500, 4, 183, 226),
+                          minWidth: 310.0,
+                          height: 50.0,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            onPressed: () async {
+                              getAccessToken(url);
+                              validate();
+                            },
+                            child: Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontFamily: 'Raleway'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

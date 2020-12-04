@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'scan.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,10 +13,6 @@ class HomePage extends StatefulWidget {
   HomePage({Key key, @required this.value}) : super(key: key);
 }
 
-logout(BuildContext context) {
-  Navigator.pop(context);
-}
-
 class HomePageState extends State<HomePage> {
   final String url = "https://192.168.10.215/mk/adminController";
 
@@ -28,10 +22,8 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-   
   }
 
-  
   Color appBarColor = Color.fromARGB(500, 4, 183, 226);
 
   Color gradientStart = Colors.blue[400];
@@ -55,7 +47,7 @@ class HomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
               onPressed: () {
-                logout(context);
+                Navigator.pop(context);
               },
             ),
           ],
@@ -85,19 +77,18 @@ class HomePageState extends State<HomePage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(15.0)),
                           onPressed: () {
-                           Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ScanPage()
-                                        ),
-                                      );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ScanPage()),
+                            );
                           },
                           child: Column(
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Icon(MaterialCommunityIcons.qrcode_scan,
-                                color: Colors.white),
+                                    color: Colors.white),
                               ),
                               Text(
                                 'Scan QR \n '.toUpperCase(),

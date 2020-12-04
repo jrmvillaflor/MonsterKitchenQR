@@ -3,6 +3,7 @@
 //import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 //import 'login.dart';
@@ -37,7 +38,13 @@ Future getAccessToken(String url) async {
 final String url = "https://192.168.10.215/mk/userController";
 
 class SignUpPageState extends State<SignUpPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final userFNAME = TextEditingController();
+
   final userADDRESS = TextEditingController();
   final userCONTACTNUMBER = TextEditingController();
 
@@ -52,11 +59,13 @@ class SignUpPageState extends State<SignUpPage> {
 
   passData() {
     getAccessToken(url);
-    var route = new MaterialPageRoute(
-      builder: (BuildContext context) =>
-          new GeneratePage(value: userFNAME.text),
-    );
-    Navigator.of(context).push(route);
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          builder: (BuildContext context) => GeneratePage(
+            value: userFNAME.text,
+          ),
+        ))
+        .then((_) => formKey.currentState.reset());
   }
 
   Future<dynamic> adduser() async {
@@ -107,225 +116,223 @@ class SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          resizeToAvoidBottomPadding: false,
-          backgroundColor: Colors.blue,
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [gradientStart, gradientEnd],
-                  begin: FractionalOffset(0.9, 0.0),
-                  end: FractionalOffset(0.0, 0.7),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-            child: Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(bottom: 15),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.blue,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [gradientStart, gradientEnd],
+                begin: FractionalOffset(0.9, 0.0),
+                end: FractionalOffset(0.0, 0.7),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp),
+          ),
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/monsterkitchenlabel.png',
+                          width: 250,
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
                       child: Column(
                         children: [
-                          Image.asset(
-                            'assets/images/monsterkitchenlabel.png',
-                            width: 250,
+                          Text(
+                            'Contact Tracing App'.toUpperCase(),
+                            style: TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 15,
+                                color: Colors.white),
                           )
                         ],
                       ),
                     ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Contact Tracing App'.toUpperCase(),
-                              style: TextStyle(
-                                  fontFamily: 'Raleway',
-                                  fontSize: 15,
-                                  color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) =>
+                          value.isEmpty ? 'Please enter valid Name' : null,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(12),
+                          filled: true,
+                          fillColor: Colors.black12,
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          labelText: "Full Name",
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Raleway',
+                            fontSize: 13,
+                          )),
+                      controller: userFNAME,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) =>
-                            value.isEmpty ? 'Please enter valid Name' : null,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(12),
-                            filled: true,
-                            fillColor: Colors.black12,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                            focusedBorder: OutlineInputBorder(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) =>
+                          value.isEmpty ? 'Please enter valid Address' : null,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(12),
+                          filled: true,
+                          fillColor: Colors.black12,
+                          border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            labelText: "Full Name",
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Raleway',
-                              fontSize: 13,
-                            )),
-                        controller: userFNAME,
-                      ),
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          labelText: "Complete Address",
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Raleway',
+                            fontSize: 13,
+                          )),
+                      controller: userADDRESS,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) =>
-                            value.isEmpty ? 'Please enter valid Address' : null,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(12),
-                            filled: true,
-                            fillColor: Colors.black12,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                            focusedBorder: OutlineInputBorder(
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value.length != 11)
+                          return 'Mobile Number must be of 11 digit';
+                        else
+                          return null;
+                      },
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(12),
+                          filled: true,
+                          fillColor: Colors.black12,
+                          border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            labelText: "Complete Address",
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Raleway',
-                              fontSize: 13,
-                            )),
-                        controller: userADDRESS,
-                      ),
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.transparent),
+                          ),
+                          labelText: "Mobile Number",
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Raleway',
+                            fontSize: 13,
+                          )),
+                      controller: userCONTACTNUMBER,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value.length != 11)
-                            return 'Mobile Number must be of 11 digit';
-                          else
-                            return null;
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: ButtonTheme(
+                      buttonColor: Color.fromARGB(500, 204, 51, 153),
+                      minWidth: 320.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                        onPressed: () async {
+                          if (formKey.currentState.validate()) {
+                            getAccessToken(url);
+                            passData();
+                            adduser();
+                            showToastAddSuccess();
+                          } else {
+                            showToastAddFailed();
+                          }
                         },
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(12),
-                            filled: true,
-                            fillColor: Colors.black12,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30)),
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              borderSide: BorderSide(
-                                  width: 1, color: Colors.transparent),
-                            ),
-                            labelText: "Mobile Number",
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Raleway',
-                              fontSize: 13,
-                            )),
-                        controller: userCONTACTNUMBER,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 15),
-                      child: ButtonTheme(
-                        buttonColor: Color.fromARGB(500, 204, 51, 153),
-                        minWidth: 320.0,
-                        height: 50.0,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
-                          onPressed: () async {
-                            if(formKey.currentState.validate()) {
-                              getAccessToken(url);
-                              passData();
-                              adduser();
-                              showToastAddSuccess();
-                            } else {
-                              showToastAddFailed();
-                            }
-                          },
-                          child: Text(
-                            'Signup to Generate QR',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Raleway',
-                              fontSize: 15.0,
-                            ),
+                        child: Text(
+                          'Signup to Generate QR',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Raleway',
+                            fontSize: 15.0,
                           ),
                         ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.all(10.0),
-                    //   child: InkWell(
-                    //     onTap: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => LoginPage()),
-                    //       );
-                    //     },
-                    //     child: Text(
-                    //       'LOGIN HERE',
-                    //       style: TextStyle(
-                    //           fontSize: 13,
-                    //           color: Colors.white54,
-                    //           fontFamily: 'Raleway'),
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
+                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.all(10.0),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => LoginPage()),
+                  //       );
+                  //     },
+                  //     child: Text(
+                  //       'LOGIN HERE',
+                  //       style: TextStyle(
+                  //           fontSize: 13,
+                  //           color: Colors.white54,
+                  //           fontFamily: 'Raleway'),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ),
         ),
+      ),
     );
   }
 }

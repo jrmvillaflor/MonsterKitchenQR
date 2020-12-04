@@ -7,7 +7,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/rendering.dart';
 // import 'package:flutter/services.dart';
 
-
 class GeneratePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => GeneratePageState();
@@ -19,24 +18,30 @@ String dummyData;
 TextEditingController qrTextController = TextEditingController();
 Color appBarColor = Color.fromARGB(500, 4, 183, 226);
 
-
-
 class GeneratePageState extends State<GeneratePage> {
-  
-  static GlobalKey previewContainer = new GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      dummyData = null;
+    });
+  }
+
+  static GlobalKey _previewContainer = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[  
-            ],
+        leading: Container(),
+        actions: <Widget>[],
         backgroundColor: appBarColor,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 130),
+        title: Text(
+          'Welcome ${widget.value}',
+          style: TextStyle(fontFamily: 'Raleway', fontSize: 12),
         ),
       ),
       body: RepaintBoundary(
-        key: previewContainer,
+        key: _previewContainer,
         child: ListView(
           children: <Widget>[
             Padding(
@@ -56,7 +61,7 @@ class GeneratePageState extends State<GeneratePage> {
                     onPressed: () {
                       setState(() {
                         dummyData =
-                        '${widget.value}' == "" ? null : '${widget.value}';
+                            '${widget.value}' == "" ? null : '${widget.value}';
                       });
                     },
                   ),
@@ -70,18 +75,18 @@ class GeneratePageState extends State<GeneratePage> {
             (dummyData == null)
                 ? Center(
                     child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      'Make sure to Screenshot QR upon generating the code'
-                          .toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontFamily: 'Raleway',
-                        fontSize: 20,
+                      padding: const EdgeInsets.all(30.0),
+                      child: Text(
+                        'Make sure to Screenshot QR upon generating the code'
+                            .toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontFamily: 'Raleway',
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                )
+                  )
                 : QrImage(
                     embeddedImage:
                         AssetImage('assets/images/monsterkitchenlogo.png'),
@@ -93,7 +98,4 @@ class GeneratePageState extends State<GeneratePage> {
       ),
     );
   }
-
-  
 }
-
