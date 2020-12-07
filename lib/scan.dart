@@ -125,12 +125,7 @@ class ScanPageState extends State<ScanPage> {
                 });
               },
             ),
-            IconButton(
-              icon: Icon(MaterialCommunityIcons.qrcode_scan),
-              onPressed: () {
-                _scan();
-              },
-            )
+            
           ],
         ),
         body: Center(
@@ -159,6 +154,9 @@ class ScanPageState extends State<ScanPage> {
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
                       child: Column(
                         children: <Widget>[
+                          (qrCodeResult == null) || (qrCodeResult == "")
+                          ? Text('')
+                          :
                           DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               hintStyle: TextStyle(
@@ -198,22 +196,52 @@ class ScanPageState extends State<ScanPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: ButtonTheme(
-                    buttonColor: Color.fromARGB(500, 4, 183, 226),
+                    buttonColor: Color.fromARGB(500, 204, 51, 153),
                     minWidth: 150.0,
                     height: 50.0,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      onPressed: () async {
-                        adduser();
-                      },
-                      child: Text(
-                        'Enter',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontFamily: 'Raleway'),
-                      ),
+                    child: Column(
+                      children: <Widget>[
+                        (qrCodeResult == null) || (qrCodeResult == "")
+                            ? Text('')
+                            : RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(30.0)),
+                                onPressed: () async {
+                                  adduser();
+                                },
+                                child: Text(
+                                  'Enter',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontFamily: 'Raleway'),
+                                ),
+                              ),
+                        Container(
+                          child: ButtonTheme(
+                            buttonColor: Color.fromARGB(500, 4, 183, 226),
+                            minWidth: 150.0,
+                            height: 50.0,
+                            child: Column(
+                              children: <Widget>[
+                                (qrCodeResult == null) || (qrCodeResult == "")
+                            ? IconButton(
+                                  iconSize: 60,
+                                  icon:
+                                      Icon(MaterialCommunityIcons.qrcode_scan),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    _scan();
+                                  },
+                                )
+                            : 
+                            Text('') 
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
