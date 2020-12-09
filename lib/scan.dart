@@ -44,6 +44,8 @@ class ScanPageState extends State<ScanPage> {
 
     userMap = json.decode(response.body);
     userList = userMap.values.toList();
+
+    
   }
 
   @override
@@ -125,7 +127,6 @@ class ScanPageState extends State<ScanPage> {
                 });
               },
             ),
-            
           ],
         ),
         body: Center(
@@ -172,8 +173,8 @@ class ScanPageState extends State<ScanPage> {
                               'Monster Kitchen Cogon'.toUpperCase(),
                               'Monster Kitchen Rizal St.'.toUpperCase(),
                               'Monster Kitchen Osmena'.toUpperCase(),
-                              'YSU Igpit'.toUpperCase(),
-                              'YSU Store'.toUpperCase(),
+                              'Monster Kitchen Puerto'.toUpperCase(),
+                              'Monster Kitchen Pueblo'.toUpperCase()
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,

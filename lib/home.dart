@@ -101,6 +101,22 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(50.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text('More features coming soon!',
+                              style: TextStyle(
+                                fontFamily: 'Raleway',
+                                color: Colors.white,
+                                letterSpacing: 2
+                              ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
