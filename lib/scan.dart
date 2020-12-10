@@ -44,8 +44,6 @@ class ScanPageState extends State<ScanPage> {
 
     userMap = json.decode(response.body);
     userList = userMap.values.toList();
-
-    
   }
 
   @override
@@ -156,41 +154,43 @@ class ScanPageState extends State<ScanPage> {
                       child: Column(
                         children: <Widget>[
                           (qrCodeResult == null) || (qrCodeResult == "")
-                          ? Text('')
-                          :
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              hintStyle: TextStyle(
-                                fontFamily: 'Raleway'
-                              ),
-                              hintText: 'Select Branch'.toUpperCase(),
-                            ),
-                            icon: Icon(Icons.arrow_drop_down_circle),
-                            value: dropdownValue,
-                            style: TextStyle(
-                                color: Colors.black87, fontFamily: 'Raleway'),
-                            items: <String>[
-                              'Monster Kitchen Cogon'.toUpperCase(),
-                              'Monster Kitchen Rizal St.'.toUpperCase(),
-                              'Monster Kitchen Osmena'.toUpperCase(),
-                              'Monster Kitchen Puerto'.toUpperCase(),
-                              'Monster Kitchen Pueblo'.toUpperCase()
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value,
-                                style: TextStyle(
-                                  fontFamily: 'Raleway'
+                              ? Text('')
+                              : DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(fontFamily: 'Raleway'),
+                                    hintText: 'Select Branch'.toUpperCase(),
+                                  ),
+                                  icon: Icon(Icons.arrow_drop_down_circle),
+                                  value: dropdownValue,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontFamily: 'Raleway'),
+                                  items: <String>[
+                                    'MK1 - COGON'.toUpperCase(),
+                                    'MK2 - CATHEDRAL'.toUpperCase(),
+                                    'MK3 - DAVAO'.toUpperCase(),
+                                    'MK4 - OSMEÑA'.toUpperCase(),
+                                    'MK5 - ILIGAN'.toUpperCase(),
+                                    'MK6 - YSU STORE'.toUpperCase(),
+                                    'MK7 - VALENCIA'.toUpperCase(),
+                                    'MK8 - PUERTO'.toUpperCase(),
+                                    'MK9 - PUEBLO'.toUpperCase(),
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(fontFamily: 'Raleway'),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      dropdownValue = newValue;
+                                    });
+                                  },
                                 ),
-                              ),
-                            );
-                            }).toList(),
-                            onChanged: (String newValue) {
-                              setState(() {
-                                dropdownValue = newValue;
-                              });
-                            },
-                          ),
                         ],
                       )),
                 ),
@@ -227,17 +227,16 @@ class ScanPageState extends State<ScanPage> {
                             child: Column(
                               children: <Widget>[
                                 (qrCodeResult == null) || (qrCodeResult == "")
-                            ? IconButton(
-                                  iconSize: 60,
-                                  icon:
-                                      Icon(MaterialCommunityIcons.qrcode_scan),
-                                  color: Colors.black,
-                                  onPressed: () {
-                                    _scan();
-                                  },
-                                )
-                            : 
-                            Text('') 
+                                    ? IconButton(
+                                        iconSize: 60,
+                                        icon: Icon(
+                                            MaterialCommunityIcons.qrcode_scan),
+                                        color: Colors.black,
+                                        onPressed: () {
+                                          _scan();
+                                        },
+                                      )
+                                    : Text('')
                               ],
                             ),
                           ),
