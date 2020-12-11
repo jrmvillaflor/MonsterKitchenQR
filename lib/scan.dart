@@ -30,8 +30,8 @@ Future getAccessToken(String url) async {
 }
 
 class ScanPageState extends State<ScanPage> {
-  final String url = "https://192.168.10.215/mk/userLoginController";
-  final String url2 = "https://192.168.10.215/mk/adminController";
+  final String url = "http://monsterkitchen.000webhostapp.com/mk/userLoginController";
+  final String url2 = "http://monsterkitchen.000webhostapp.com/mk/adminController";
 
   var dropdownValue;
   List userList;
@@ -61,6 +61,7 @@ class ScanPageState extends State<ScanPage> {
     String userfname = qrCodeResult;
     String timein = formattedDate;
     String branch = dropdownValue;
+    String temp = temperature.text + "°C";
 
     Map<String, String> headers = {
       "Content-type": "application/x-www-form-urlencoded"
@@ -69,6 +70,7 @@ class ScanPageState extends State<ScanPage> {
       "userFNAME": "$userfname",
       "timein": "$timein",
       "branch": "$branch",
+      "temperature": "$temp"
     };
 
     final response = await https.post(url, headers: headers, body: adduser);
@@ -91,6 +93,7 @@ class ScanPageState extends State<ScanPage> {
     back(context);
   }
 
+  final temperature = TextEditingController();
   bool isUpdating = false;
   Map data;
   int id;
@@ -192,7 +195,32 @@ class ScanPageState extends State<ScanPage> {
                                   },
                                 ),
                         ],
-                      )),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(80, 0, 80, 5),
+                    child: Column(
+                      children: <Widget>[
+                        (qrCodeResult == null) || (qrCodeResult == "")
+                            ? Text('')
+                            : TextFormField(
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                controller: temperature,
+                                decoration: InputDecoration(
+                                  hintText: "Temperature".toUpperCase(),
+                                  hintStyle: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                            ),
+                      ],
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),

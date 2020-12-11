@@ -23,7 +23,7 @@ Future getAccessToken(String url) async {
   HttpOverrides.global = new MyHttpOverrides();
 }
 
-final String url = "https://192.168.10.215/mk/userController";
+final String url = "http://monsterkitchen.000webhostapp.com/mk/userController";
 
 class MyApp extends StatelessWidget {
   //SharedPreferences sharedPreferences;
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Color.fromARGB(500, 4, 183, 226),
                                     onPressed: () async {
                                       final url =
-                                          "https://192.168.10.215/mk/adminController";
+                                          "https://ysucentralhosting.000webhostapp.com/adminController";
                                       getAccessToken(url);
                                       Navigator.push(
                                         context,

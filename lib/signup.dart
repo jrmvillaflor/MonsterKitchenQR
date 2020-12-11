@@ -35,7 +35,7 @@ Future getAccessToken(String url) async {
   HttpOverrides.global = new MyHttpOverrides();
 }
 
-final String url = "https://192.168.10.215/mk/userController";
+final String url = "http://monsterkitchen.000webhostapp.com/mk/userController";
 
 class SignUpPageState extends State<SignUpPage> {
   @override
@@ -51,7 +51,7 @@ class SignUpPageState extends State<SignUpPage> {
   String dummyData;
   TextEditingController qrTextController = TextEditingController();
 
-  final String url = "https://192.168.10.215/mk/userController";
+  final String url = "http://monsterkitchen.000webhostapp.com/mk/userController";
 
   bool isUpdating = false;
   Map data;
