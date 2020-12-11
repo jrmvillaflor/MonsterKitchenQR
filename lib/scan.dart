@@ -30,8 +30,10 @@ Future getAccessToken(String url) async {
 }
 
 class ScanPageState extends State<ScanPage> {
-  final String url = "http://monsterkitchen.000webhostapp.com/mk/userLoginController";
-  final String url2 = "http://monsterkitchen.000webhostapp.com/mk/adminController";
+  final String url =
+      "http://monsterkitchen.000webhostapp.com/mk/userLoginController";
+  final String url2 =
+      "http://monsterkitchen.000webhostapp.com/mk/adminController";
 
   var dropdownValue;
   List userList;
@@ -153,48 +155,47 @@ class ScanPageState extends State<ScanPage> {
                 ),
                 Container(
                   child: Padding(
-                      padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
-                      child: Column(
-                        children: <Widget>[
-                          (qrCodeResult == null) || (qrCodeResult == "")
-                              ? Text('')
-                              : DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    hintStyle: TextStyle(fontFamily: 'Raleway'),
-                                    hintText: 'Select Branch'.toUpperCase(),
-                                  ),
-                                  icon: Icon(Icons.arrow_drop_down_circle),
-                                  value: dropdownValue,
-                                  style: TextStyle(
-                                      color: Colors.black87,
-                                      fontFamily: 'Raleway'),
-                                  items: <String>[
-                                    'MK1 - COGON'.toUpperCase(),
-                                    'MK2 - CATHEDRAL'.toUpperCase(),
-                                    'MK3 - DAVAO'.toUpperCase(),
-                                    'MK4 - OSMEÑA'.toUpperCase(),
-                                    'MK5 - ILIGAN'.toUpperCase(),
-                                    'MK6 - YSU STORE'.toUpperCase(),
-                                    'MK7 - VALENCIA'.toUpperCase(),
-                                    'MK8 - PUERTO'.toUpperCase(),
-                                    'MK9 - PUEBLO'.toUpperCase(),
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                        style: TextStyle(fontFamily: 'Raleway'),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String newValue) {
-                                    setState(() {
-                                      dropdownValue = newValue;
-                                    });
-                                  },
+                    padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
+                    child: Column(
+                      children: <Widget>[
+                        (qrCodeResult == null) || (qrCodeResult == "")
+                            ? Text('')
+                            : DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  hintStyle: TextStyle(fontFamily: 'Raleway'),
+                                  hintText: 'Select Branch'.toUpperCase(),
                                 ),
-                        ],
+                                icon: Icon(Icons.arrow_drop_down_circle),
+                                value: dropdownValue,
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontFamily: 'Raleway'),
+                                items: <String>[
+                                  'MK1 - COGON'.toUpperCase(),
+                                  'MK2 - CATHEDRAL'.toUpperCase(),
+                                  'MK3 - DAVAO'.toUpperCase(),
+                                  'MK4 - OSMEÑA'.toUpperCase(),
+                                  'MK5 - ILIGAN'.toUpperCase(),
+                                  'MK6 - YSU STORE'.toUpperCase(),
+                                  'MK7 - VALENCIA'.toUpperCase(),
+                                  'MK8 - PUERTO'.toUpperCase(),
+                                  'MK9 - PUEBLO'.toUpperCase(),
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(fontFamily: 'Raleway'),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                  });
+                                },
+                              ),
+                      ],
                     ),
                   ),
                 ),
@@ -205,18 +206,24 @@ class ScanPageState extends State<ScanPage> {
                       children: <Widget>[
                         (qrCodeResult == null) || (qrCodeResult == "")
                             ? Text('')
-                            : TextFormField(
-                                textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                controller: temperature,
-                                decoration: InputDecoration(
-                                  hintText: "Temperature".toUpperCase(),
-                                  hintStyle: TextStyle(
-                                      fontFamily: 'Raleway',
-                                      fontSize: 12,
-                                      color: Colors.grey),
-                                ),
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextFormField(
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    controller: temperature,
+                                    decoration: InputDecoration(
+                                      hintText: "Temperature".toUpperCase(),
+                                      hintStyle: TextStyle(
+                                          fontFamily: 'Raleway',
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                  ),
+                                ],
                             ),
                       ],
                     ),

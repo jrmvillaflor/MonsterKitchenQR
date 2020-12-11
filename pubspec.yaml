@@ -31,6 +31,8 @@ dependencies:
   flutter_vector_icons: any
   barcode_scan: 
   image_picker_saver: 
+  image_gallery_saver:
+  permission_handler:
 
 
   # The following adds the Cupertino Icons font to your application.
