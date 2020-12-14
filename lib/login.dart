@@ -46,7 +46,6 @@ class LoginPageState extends State<LoginPage> {
 
     userMap = json.decode(response.body);
     userList = userMap.values.toList();
-
   }
 
   check(List alluser, String username, String password, String branch) {

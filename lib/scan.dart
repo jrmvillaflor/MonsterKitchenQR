@@ -85,6 +85,15 @@ class ScanPageState extends State<ScanPage> {
     showToastAddSuccess();
   }
 
+   void showToastAddFailed() {
+    Fluttertoast.showToast(
+        msg: 'Registration Failed',
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        gravity: ToastGravity.CENTER,
+        toastLength: Toast.LENGTH_LONG);
+  }
+
   void showToastAddSuccess() {
     Fluttertoast.showToast(
         msg: 'Sucessfully Added',
@@ -103,6 +112,7 @@ class ScanPageState extends State<ScanPage> {
 
   String qrCodeResult;
   bool backCamera = true;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -132,155 +142,165 @@ class ScanPageState extends State<ScanPage> {
             ),
           ],
         ),
-        body: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 5),
-                  child: Text(
-                    (qrCodeResult == null) || (qrCodeResult == "")
-                        ? "Please Scan to show some result".toUpperCase()
-                        : "Time In: $formattedDate \n name: ".toUpperCase() +
-                            qrCodeResult.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Raleway',
-                      wordSpacing: 5,
+        body: Form(
+          key: formKey,
+          child: Center(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 30, 5),
+                    child: Text(
+                      (qrCodeResult == null) || (qrCodeResult == "")
+                          ? "Please Scan to show some result".toUpperCase()
+                          : "Time In: $formattedDate \n name: ".toUpperCase() +
+                              qrCodeResult.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Raleway',
+                        wordSpacing: 5,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
-                    child: Column(
-                      children: <Widget>[
-                        (qrCodeResult == null) || (qrCodeResult == "")
-                            ? Text('')
-                            : DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  hintStyle: TextStyle(fontFamily: 'Raleway'),
-                                  hintText: 'Select Branch'.toUpperCase(),
-                                ),
-                                icon: Icon(Icons.arrow_drop_down_circle),
-                                value: dropdownValue,
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: 'Raleway'),
-                                items: <String>[
-                                  'MK1 - COGON'.toUpperCase(),
-                                  'MK2 - CATHEDRAL'.toUpperCase(),
-                                  'MK3 - DAVAO'.toUpperCase(),
-                                  'MK4 - OSMEÑA'.toUpperCase(),
-                                  'MK5 - ILIGAN'.toUpperCase(),
-                                  'MK6 - YSU STORE'.toUpperCase(),
-                                  'MK7 - VALENCIA'.toUpperCase(),
-                                  'MK8 - PUERTO'.toUpperCase(),
-                                  'MK9 - PUEBLO'.toUpperCase(),
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(fontFamily: 'Raleway'),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String newValue) {
-                                  setState(() {
-                                    dropdownValue = newValue;
-                                  });
-                                },
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(80, 0, 80, 5),
-                    child: Column(
-                      children: <Widget>[
-                        (qrCodeResult == null) || (qrCodeResult == "")
-                            ? Text('')
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextFormField(
-                                    textInputAction: TextInputAction.done,
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
-                                    controller: temperature,
-                                    decoration: InputDecoration(
-                                      hintText: "Temperature".toUpperCase(),
-                                      hintStyle: TextStyle(
-                                          fontFamily: 'Raleway',
-                                          fontSize: 12,
-                                          color: Colors.grey),
-                                    ),
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(30, 0, 30, 5),
+                      child: Column(
+                        children: <Widget>[
+                          (qrCodeResult == null) || (qrCodeResult == "")
+                              ? Text('')
+                              : DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(fontFamily: 'Raleway'),
+                                    hintText: 'Select Branch'.toUpperCase(),
                                   ),
-                                ],
-                            ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-                  child: ButtonTheme(
-                    buttonColor: Color.fromARGB(500, 204, 51, 153),
-                    minWidth: 150.0,
-                    height: 50.0,
-                    child: Column(
-                      children: <Widget>[
-                        (qrCodeResult == null) || (qrCodeResult == "")
-                            ? Text('')
-                            : RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                                onPressed: () async {
-                                  adduser();
-                                },
-                                child: Text(
-                                  'Enter',
+                                  icon: Icon(Icons.arrow_drop_down_circle),
+                                  value: dropdownValue,
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
+                                      color: Colors.black87,
                                       fontFamily: 'Raleway'),
+                                  items: <String>[
+                                    'MK1 - COGON'.toUpperCase(),
+                                    'MK2 - CATHEDRAL'.toUpperCase(),
+                                    'MK3 - DAVAO'.toUpperCase(),
+                                    'MK4 - OSMEÑA'.toUpperCase(),
+                                    'MK5 - ILIGAN'.toUpperCase(),
+                                    'MK6 - YSU STORE'.toUpperCase(),
+                                    'MK7 - VALENCIA'.toUpperCase(),
+                                    'MK8 - PUERTO'.toUpperCase(),
+                                    'MK9 - PUEBLO'.toUpperCase(),
+                                  ].map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(fontFamily: 'Raleway'),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      dropdownValue = newValue;
+                                    });
+                                  },
                                 ),
-                              ),
-                        Container(
-                          child: ButtonTheme(
-                            buttonColor: Color.fromARGB(500, 4, 183, 226),
-                            minWidth: 150.0,
-                            height: 50.0,
-                            child: Column(
-                              children: <Widget>[
-                                (qrCodeResult == null) || (qrCodeResult == "")
-                                    ? IconButton(
-                                        iconSize: 60,
-                                        icon: Icon(
-                                            MaterialCommunityIcons.qrcode_scan),
-                                        color: Colors.black,
-                                        onPressed: () {
-                                          _scan();
-                                        },
-                                      )
-                                    : Text('')
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(80, 0, 80, 5),
+                        child: Column(
+                          children: <Widget>[
+                            (qrCodeResult == null) || (qrCodeResult == "")
+                                ? Text('')
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextFormField(
+                                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        validator: (value) =>
+                                        value.isEmpty ? 'Please enter valid Temperature' : null,
+                                        textInputAction: TextInputAction.done,
+                                        keyboardType:
+                                            TextInputType.numberWithOptions(
+                                                decimal: true),
+                                        controller: temperature,
+                                        decoration: InputDecoration(
+                                          hintText: "Temperature".toUpperCase(),
+                                          hintStyle: TextStyle(
+                                              fontFamily: 'Raleway',
+                                              fontSize: 12,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+                    child: ButtonTheme(
+                      buttonColor: Color.fromARGB(500, 204, 51, 153),
+                      minWidth: 150.0,
+                      height: 50.0,
+                      child: Column(
+                        children: <Widget>[
+                          (qrCodeResult == null) || (qrCodeResult == "")
+                              ? Text('')
+                              : RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)),
+                                  onPressed: () async {
+                                    adduser();
+                                  },
+                                  child: Text(
+                                    'Enter',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                ),
+                          Container(
+                            child: ButtonTheme(
+                              buttonColor: Color.fromARGB(500, 4, 183, 226),
+                              minWidth: 150.0,
+                              height: 50.0,
+                              child: Column(
+                                children: <Widget>[
+                                  (qrCodeResult == null) || (qrCodeResult == "")
+                                      ? IconButton(
+                                          iconSize: 60,
+                                          icon: Icon(
+                                              MaterialCommunityIcons.qrcode_scan),
+                                          color: Colors.black,
+                                          onPressed: () {
+                                            if (formKey.currentState.validate()) {     
+                                              _scan();
+                                           } else {
+                                              showToastAddFailed();
+                                          }
+                                          },
+                                        )
+                                      : Text('')
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

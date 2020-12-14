@@ -12,6 +12,10 @@ import 'dart:async';
 import 'generatescreen.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
+import 'user.dart';
+
+
+
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -43,10 +47,10 @@ class SignUpPageState extends State<SignUpPage> {
     super.initState();
   }
 
-  final userFNAME = TextEditingController();
+  var userFNAME = TextEditingController();
 
-  final userADDRESS = TextEditingController();
-  final userCONTACTNUMBER = TextEditingController();
+  var userADDRESS = TextEditingController();
+  var userCONTACTNUMBER = TextEditingController();
 
   String dummyData;
   TextEditingController qrTextController = TextEditingController();
@@ -62,16 +66,21 @@ class SignUpPageState extends State<SignUpPage> {
     Navigator.of(context)
         .push(MaterialPageRoute(
           builder: (BuildContext context) => GeneratePage(
-            value: userFNAME.text,
+           value: User(
+             address: userADDRESS.text, 
+             fullname: userFNAME.text,
+             contactnumber: userCONTACTNUMBER.text
+            ), 
           ),
-        ))
+        ),
+        )
         .then((_) => formKey.currentState.reset());
   }
 
   Future<dynamic> adduser() async {
-    String userfname = userFNAME.text;
-    String usercontact = userCONTACTNUMBER.text;
-    String useraddr = userADDRESS.text;
+    var userfname = userFNAME.text;
+    var usercontact = userCONTACTNUMBER.text;
+    var useraddr = userADDRESS.text;
 
     Map<String, String> headers = {
       "Content-type": "application/x-www-form-urlencoded"
