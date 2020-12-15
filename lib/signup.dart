@@ -9,10 +9,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 //import 'login.dart';
 import 'package:http/http.dart' as https;
 import 'dart:async';
-import 'generatescreen.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:io';
 import 'user.dart';
+import 'userhome.dart';
 
 
 
@@ -55,7 +55,7 @@ class SignUpPageState extends State<SignUpPage> {
   String dummyData;
   TextEditingController qrTextController = TextEditingController();
 
-  final String url = "http://monsterkitchen.000webhostapp.com/mk/userController";
+  final String url = "https://monsterkitchen.000webhostapp.com/mk/userController";
 
   bool isUpdating = false;
   Map data;
@@ -65,7 +65,7 @@ class SignUpPageState extends State<SignUpPage> {
     getAccessToken(url);
     Navigator.of(context)
         .push(MaterialPageRoute(
-          builder: (BuildContext context) => GeneratePage(
+          builder: (BuildContext context) => UserHomePage(
            value: User(
              address: userADDRESS.text, 
              fullname: userFNAME.text,
@@ -307,7 +307,7 @@ class SignUpPageState extends State<SignUpPage> {
                           }
                         },
                         child: Text(
-                          'Signup to Generate QR',
+                          'Signup'.toUpperCase(),
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Raleway',

@@ -63,7 +63,17 @@ class GeneratePageState extends State<GeneratePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Container(),
-        actions: <Widget>[],
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+        ],
         backgroundColor: appBarColor,
         title: Text(
           'Welcome ${widget.value.fullname}',

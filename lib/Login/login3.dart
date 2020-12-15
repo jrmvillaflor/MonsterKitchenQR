@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
+import '../database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as https;
 import 'dart:convert';
-import 'home.dart';
 import 'dart:io';
 
-class LoginPage extends StatefulWidget {
-  LoginPage();
+import '../user.dart';
+import '../userhome.dart';
+
+class CustomerLoginPage extends StatefulWidget {
+  CustomerLoginPage();
 
   @override
   State<StatefulWidget> createState() {
-    return LoginPageState();
+    return CustomerLoginPageState();
   }
 }
 
@@ -21,8 +23,9 @@ Future getAccessToken(String url) async {
       ((X509Certificate cert, String host, int port) => true);
 }
 
-class LoginPageState extends State<LoginPage> {
-  final String url = "https://monsterkitchen.000webhostapp.com/mk/adminController";
+class CustomerLoginPageState extends State<CustomerLoginPage> {
+  final String url =
+      "https://monsterkitchen.000webhostapp.com/mk/userController";
 
   List userList;
   Map userMap;
@@ -36,7 +39,6 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
     getAllDatas();
     getAccessToken(url);
-    
   }
 
   getAllDatas() async {
@@ -48,12 +50,13 @@ class LoginPageState extends State<LoginPage> {
     userList = userMap.values.toList();
   }
 
-  check(List alluser, String username, String password, String branch) {
+  check(List alluser, String username, String password) {
     getAccessToken(url);
     int index = 0;
+    var password = '123';
     while (alluser.length - 1 > index) {
       if (userUSERNAME.text == alluser[index][username]) {
-        if (userPASSWORD.text == alluser[index][password]) {
+        if (userPASSWORD.text == password) {
           return index;
         }
       }
@@ -66,20 +69,25 @@ class LoginPageState extends State<LoginPage> {
 
   validate() async {
     getAccessToken(url);
-    var successUser = check(userList, 'userUSERNAME', 'userPASSWORD', 'branch');
+    var successUser = check(userList, 'userCONTACTNUMBER', '');
     if (successUser != false) {
-      print(userList[successUser]['userUSERNAME']);
-      print(userList[successUser]['branch']);
+      print(userList[successUser]['userFNAME']);
 
       showToastLoginSuccess();
 
       Navigator.of(context)
-        .push(MaterialPageRoute(
-          builder: (BuildContext context) => HomePage(
-            value: userList[successUser]['userUSERNAME'],
-          ),
-        ))
-        .then((_) => formKey.currentState.reset());
+          .push(
+            MaterialPageRoute(
+              builder: (BuildContext context) => UserHomePage(
+                value: User(
+                  address: userList[successUser]['userADDRESS'],
+                  fullname: userList[successUser]['userFNAME'],
+                  contactnumber: userList[successUser]['userCONTACTNUMBER'],
+                ),
+              ),
+            ),
+          )
+          .then((_) => formKey.currentState.reset());
     } else {
       showToastLoginFailed();
     }
@@ -117,7 +125,7 @@ class LoginPageState extends State<LoginPage> {
           resizeToAvoidBottomPadding: false,
           body: Form(
             key: formKey,
-              child: Container(
+            child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [gradientStart, gradientEnd],
@@ -170,16 +178,18 @@ class LoginPageState extends State<LoginPage> {
                                 borderSide:
                                     BorderSide(color: Colors.transparent)),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.transparent),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.transparent),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.transparent),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.transparent),
                             ),
-                            labelText: "Username",
+                            labelText: "Contact Number",
                             labelStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,
@@ -204,14 +214,16 @@ class LoginPageState extends State<LoginPage> {
                                 borderSide:
                                     BorderSide(color: Colors.transparent)),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.transparent),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.transparent),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.transparent),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.transparent),
                             ),
                             labelText: "Password",
                             labelStyle: TextStyle(
