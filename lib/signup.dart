@@ -39,7 +39,7 @@ Future getAccessToken(String url) async {
   HttpOverrides.global = new MyHttpOverrides();
 }
 
-final String url = "http://monsterkitchen.000webhostapp.com/mk/userController";
+final String url = "https://monsterkitchen.000webhostapp.com/mk/userController";
 
 class SignUpPageState extends State<SignUpPage> {
   @override

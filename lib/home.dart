@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final String url = "http://monsterkitchen.000webhostapp.com/mk/adminController";
+  final String url = "https://monsterkitchen.000webhostapp.com/mk/adminController";
 
   List userList;
   Map userMap;

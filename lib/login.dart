@@ -22,7 +22,7 @@ Future getAccessToken(String url) async {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final String url = "http://monsterkitchen.000webhostapp.com/mk/adminController";
+  final String url = "https://monsterkitchen.000webhostapp.com/mk/adminController";
 
   List userList;
   Map userMap;
