@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
@@ -32,32 +31,22 @@ Future getAccessToken(String url) async {
 class ScanPageState extends State<ScanPage> {
   final String url =
       "https://monsterkitchen.000webhostapp.com/mk/userLoginController";
-  final String url2 =
-      "https://monsterkitchen.000webhostapp.com/mk/adminController";
+
 
   var dropdownValue;
   List userList;
   Map userMap;
 
-  getAllDatas() async {
-    getAccessToken(url);
-
-    final response = await https.get(url2);
-
-    userMap = json.decode(response.body);
-    userList = userMap.values.toList();
-  }
 
   @override
   void initState() {
     super.initState();
-    getAllDatas();
     getAccessToken(url);
   }
 
   Future<dynamic> adduser() async {
-    getAccessToken(url);
 
+    getAccessToken(url);
     String formattedDate = DateFormat.yMd().add_jm().format(now);
 
     String userfname = qrCodeResult;
@@ -72,7 +61,7 @@ class ScanPageState extends State<ScanPage> {
       "userFNAME": "$userfname",
       "timein": "$timein",
       "branch": "$branch",
-      "temperature": "$temp"
+      "temperature": "$temp",
     };
 
     final response = await https.post(url, headers: headers, body: adduser);
@@ -124,6 +113,7 @@ class ScanPageState extends State<ScanPage> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: appBarColor,
+          
           title: Text(
             "Scan using: " + (backCamera ? "Front Cam" : "Back Cam"),
             style: TextStyle(fontSize: 15, fontFamily: 'Raleway'),

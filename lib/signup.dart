@@ -150,7 +150,7 @@ class SignUpPageState extends State<SignUpPage> {
                   Container(
                     padding: EdgeInsets.only(bottom: 15),
                     child: Column(
-                      children: [
+                      children: [ 
                         Image.asset(
                           'assets/images/monsterkitchenlabel.png',
                           width: 250,

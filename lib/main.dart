@@ -1,6 +1,3 @@
-//import 'package:bookinder/genretest.dart';
-//import 'package:monsterkitchen/home.dart';
-//import 'dart:convert';
 import 'dart:io';
 import 'Login/login2.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +22,6 @@ Future getAccessToken(String url) async {
 final String url = "https://monsterkitchen.000webhostapp.com/mk/userController";
 
 class MyApp extends StatelessWidget {
-  //SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  Color gradientStart = Colors.blue; //Change start gradient color here
+  Color gradientStart = Colors.blue;
   Color gradientEnd = Colors.blue[300];
-  //Change end gradient color here
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -91,8 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.only(top: 100),
                         child: Image.asset(
                             'assets/images/monsterkitchenlogo.png',
-                            height: 200),
-                      )
+                            height: 200
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -140,28 +136,34 @@ class _MyHomePageState extends State<MyHomePage> {
                                         style: TextStyle(
                                           fontSize: 25.0,
                                           fontFamily: 'Raleway',
-                                        )),
+                                        ),
+                                    ),
                                     textColor: Colors.white,
                                   ),
                               ),
                               FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0)),
-                                  color: Color.fromARGB(500, 204, 51, 153),
-                                  onPressed: () async {
-                                    getAccessToken(url);
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                      new BorderRadius.circular(30.0)
+                                ),
+                                color: Color.fromARGB(500, 204, 51, 153),
+                                onPressed: () async {
+                                  getAccessToken(url);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignUpPage()),
+                                          builder: (context) => SignUpPage()
+                                      ),
                                     );
                                   },
                                   child: Text("SIGNUP",
                                       style: TextStyle(
                                           fontSize: 25.0,
-                                          fontFamily: 'Raleway')),
-                                  textColor: Colors.white)
+                                          fontFamily: 'Raleway',
+                                      )
+                                  ),
+                              ),
                             ],
                           ),
                         ),

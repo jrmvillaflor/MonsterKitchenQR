@@ -62,17 +62,12 @@ class GeneratePageState extends State<GeneratePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Container(),
+        leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        }, icon:  Icon(Icons.arrow_back),
+        ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
         ],
         backgroundColor: appBarColor,
         title: Text(
